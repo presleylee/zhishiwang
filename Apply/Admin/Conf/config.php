@@ -9,6 +9,6 @@ return [
     'LOGIN_SESSION_KEY' => 'zws_login_key',
 
     'NO_VALID_CONTROLLER' => [
-        'public' => ['login']
+        'public' => ['login', 'logincheck']
     ]
 ];
