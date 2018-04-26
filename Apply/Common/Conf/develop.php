@@ -7,6 +7,7 @@
  */
 return [
     /* 应用设定 */
+    'SHOW_PAGE_TRACE' => false,
     'APP_USE_NAMESPACE'     =>  true,    // 应用类库是否使用命名空间
     'APP_SUB_DOMAIN_DEPLOY' => 1, // 是否开启子域名部署
     'APP_SUB_DOMAIN_RULES' => [

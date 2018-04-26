@@ -51,4 +51,16 @@ class CommonController extends Controller
             $this->redirect('/Public/login');
         }
     }
+
+    /**
+     * 获取请求数据
+     *
+     * @param string $str_field;
+     * @return mixed;
+    */
+    public function getData($str_field = '')
+    {
+        $str_method = IS_POST ? 'post.' : 'get.';
+        return I($str_method . $str_field);
+    }
 }

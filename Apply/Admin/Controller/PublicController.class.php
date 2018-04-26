@@ -31,4 +31,53 @@ class PublicController extends CommonController
     {
         $this->display();
     }
+
+    /**
+     * 登录验证
+     *
+     * @return void
+     * @out_data json
+    */
+    public function loginCheck()
+    {
+        if (IS_POST == false) {
+            $this->ajaxReturn(['status' => 'n', 'info' => '非法请求']);
+        }
+
+        $arr_loginInfo = $this->getLoginInfo();
+        $model = D('Common/Admin');
+
+        $arr_result = $model->checkLogin($arr_loginInfo);
+
+        $str_loginState = 'n';
+        $str_msg = '';
+        switch ($arr_result['type']) {
+
+        }
+
+        $this->ajaxReturn(['status' => $str_loginState, 'info' => $str_msg]);
+    }
+
+    /**
+     * 获取登录者信息
+     *
+     * @return array
+    */
+    private function getLoginInfo()
+    {
+        $arr_post = $this->getData();
+        $arr_data = [];
+
+        if (!$arr_post['username']) {
+            $this->ajaxReturn(['status' => 'n', 'info' => '必须填写用户名']);
+        }
+        $arr_data = trim($arr_post['username']);
+
+        if (!$arr_post['password']) {
+            $this->ajaxReturn(['status' => 'n', 'info' => '必须填写登录密码']);
+        }
+        $arr_data = trim($arr_post['password']);
+
+        return $arr_data;
+    }
 }
