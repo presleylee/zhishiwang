@@ -11,5 +11,7 @@ namespace Common\Model;
 
 class AdminRoleModel extends CommonModel
 {
-
+    /**
+     *
+    */
 }

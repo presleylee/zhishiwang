@@ -47,12 +47,27 @@ class PublicController extends CommonController
         $arr_loginInfo = $this->getLoginInfo();
         $model = D('Common/Admin');
 
-        $arr_result = $model->checkLogin($arr_loginInfo);
+        $mixed_result = $model->checkLogin($arr_loginInfo);
 
         $str_loginState = 'n';
         $str_msg = '';
-        switch ($arr_result['type']) {
+        if (is_array($mixed_result)) {
+            if (is_numeric($mixed_result['type']) && $mixed_result['type'] === 0) {
 
+                $str_loginState = 'Y';
+                $str_msg = '登录成功';
+
+                //写入登录数据至 session;
+                $arr_userInfo = $mixed_result['user_info'];
+                session( C('LOGIN_SESSION_KEY'), $arr_userInfo);
+
+                //登录后操作
+                $model->loginAfter($arr_userInfo);
+            }
+
+            $mixed_result['type'] && $str_msg = $mixed_result['msg'];
+        } else {
+            $str_msg = '未知错误';
         }
 
         $this->ajaxReturn(['status' => $str_loginState, 'info' => $str_msg]);

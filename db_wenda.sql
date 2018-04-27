@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: db_wenda
 Target Host: localhost
 Target Database: db_wenda
-Date: 2018/4/26 23:24:02
+Date: 2018/4/27 23:29:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,6 +20,7 @@ CREATE TABLE `admin` (
   `department` smallint(4) NOT NULL DEFAULT '0',
   `is_lock` tinyint(1) NOT NULL DEFAULT '0',
   `create_time` int(10) NOT NULL DEFAULT '0',
+  `authkey` char(32) NOT NULL COMMENT '登录校验码',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -42,6 +43,7 @@ CREATE TABLE `admin_login_log` (
   `username` varchar(50) NOT NULL,
   `login_ip` char(15) NOT NULL,
   `login_time` int(10) NOT NULL DEFAULT '0',
+  `authkey` char(32) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

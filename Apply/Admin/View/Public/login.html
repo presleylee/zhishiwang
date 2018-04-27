@@ -31,7 +31,7 @@
                     </div>
                     <div class="panel-body">
                         <form role="form" name="login" class="login-form" action="/public/loginCheck">
-                            <span id="msgdemo"></span>
+                            <span id="loginInfoTips"></span>
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="用户名" name="username" type="text" datatype="s5-18" nullmsg="请填写登录用户名" errormsg="请填写登录用户名！" autofocus />
@@ -39,11 +39,11 @@
                                 <div class="form-group">
                                     <input class="form-control" placeholder="登录密码" name="password" type="password" value="" datatype="*5-22" nullmsg="请设置密码！" errormsg="请设置密码" />
                                 </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">记住登录
-                                    </label>
-                                </div>
+                                <!--<div class="checkbox">-->
+                                    <!--<label>-->
+                                        <!--<input name="remember" type="checkbox" value="Remember Me">记住登录-->
+                                    <!--</label>-->
+                                <!--</div>-->
                                 <a href="javascript:;" class="btn btn-lg btn-success btn-block admin-login-btn">登录</a>
                             </fieldset>
                         </form>
@@ -60,17 +60,21 @@
     <script type="text/javascript" src="/public/static/Validform/js/Validform_min.js?v={$static_version}"></script>
     <script>
         $('.login-form').Validform({
+            btnSubmit:$('.admin-login-btn'),
             tiptype:function(msg,o,cssctl){
-                var objtip=$("#msgdemo");
+                var objtip=$("#loginInfoTips");
                 cssctl(objtip,o.type);
                 objtip.text(msg);
             },
-            ajaxPost:true
+            ajaxPost:true,
+            callback : function(res) {
+                if (res.status == 'y') {
+                    window.location.href = "/Home/";
+                } else {
+                    $("#loginInfoTips").removeClass('Validform_right').addClass('Validform_wrong');
+                }
+            }
         });
-
-        $('.admin-login-btn').off().on('click', function(){
-            $('form[role="form"]').submit()
-        })
 
     </script>
 </body>
