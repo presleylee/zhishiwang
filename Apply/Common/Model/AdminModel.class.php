@@ -23,7 +23,11 @@ class AdminModel extends CommonModel
     {
         $arr_return = $arr_map = [];
         if (!$arr_postData)
-            return false;
+            return ['type' => -1, 'msg' => '非法提交'];
+
+        if (!is_array($arr_postData)) {
+            return ['type' => -1, 'msg' => '数据格式不正确'];
+        }
 
         $arr_map['username'] = $arr_postData['username'];
         $arr_userInfo = $this->where($arr_map)->find();
@@ -42,7 +46,7 @@ class AdminModel extends CommonModel
 
         $arr_userInfo['authkey'] = md5($arr_map['username'].time());
 
-        unset($arr_userInfo['password']);
+        unset($arr_userInfo['verify'], $arr_userInfo['password']);
         return ['type' => 0, 'user_info' => $arr_userInfo];
 
     }

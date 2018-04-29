@@ -54,7 +54,7 @@ class PublicController extends CommonController
         if (is_array($mixed_result)) {
             if (is_numeric($mixed_result['type']) && $mixed_result['type'] === 0) {
 
-                $str_loginState = 'Y';
+                $str_loginState = 'y';
                 $str_msg = '登录成功';
 
                 //写入登录数据至 session;
@@ -86,13 +86,12 @@ class PublicController extends CommonController
         if (!$arr_post['username']) {
             $this->ajaxReturn(['status' => 'n', 'info' => '必须填写用户名']);
         }
-        $arr_data = trim($arr_post['username']);
+        $arr_data['username'] = trim($arr_post['username']);
 
         if (!$arr_post['password']) {
             $this->ajaxReturn(['status' => 'n', 'info' => '必须填写登录密码']);
         }
-        $arr_data = trim($arr_post['password']);
-
+        $arr_data['password'] = trim($arr_post['password']);
         return $arr_data;
     }
 }
