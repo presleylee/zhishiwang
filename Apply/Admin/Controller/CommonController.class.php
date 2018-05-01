@@ -36,6 +36,9 @@ class CommonController extends Controller
 
         //验证登录情况
         $this->checkLogin();
+
+        //生成后台菜单
+        $arr_menu = D('Common/AdminNode')->buildMenuTree();
     }
 
     /**

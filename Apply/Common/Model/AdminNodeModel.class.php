@@ -33,6 +33,26 @@ class AdminNodeModel extends CommonModel
     }
 
     /**
+     * 创建一棵菜单目录数
+     *
+     * @param array
+    */
+    public function buildMenuTree()
+    {
+        $arr_nodes = $this->getNodeList();
+        $arr_tree = [];
+
+        foreach ($arr_nodes as $id => $node) {
+            if ($node['isMenu']) {
+
+            } else {
+                continue;
+            }
+        }
+        return $arr_tree;
+    }
+
+    /**
      * 生存节点缓存
      *
      * @return array
@@ -42,6 +62,7 @@ class AdminNodeModel extends CommonModel
         $arr_map = [];
         $arr_map['status'] = 1;
         $arr_node = $this->where($arr_map)->select();
+        $arr_node = array_column($arr_node, NULL, 'id');
         if ($arr_node) {
             S($this->str_cache_name, $arr_node);
         }
