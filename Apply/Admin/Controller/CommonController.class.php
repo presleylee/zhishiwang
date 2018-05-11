@@ -39,6 +39,7 @@ class CommonController extends Controller
 
         //生成后台菜单
         $arr_menu = D('Common/AdminNode')->buildMenuTree();
+        $this->assign('menu', $arr_menu[1]['child']);
     }
 
     /**

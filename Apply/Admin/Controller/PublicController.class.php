@@ -74,6 +74,16 @@ class PublicController extends CommonController
     }
 
     /**
+     * 登出操作
+     *
+     * @return void
+     */
+    public function logout()
+    {
+
+    }
+
+    /**
      * 获取登录者信息
      *
      * @return array

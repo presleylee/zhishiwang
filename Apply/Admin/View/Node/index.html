@@ -1,0 +1,57 @@
+<include file="layout:head"/>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">节点管理</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<a href="/Node/add" class="btn btn-success">添加节点</a>
+
+<div class="row" style="margin-top:20px;">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                节点管理
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div>
+                    <ul class="node node-first-level">
+                        <foreach name="node" item="m">
+                            <if condition="empty($m.child)">
+                                <li>
+                                    <i class="fa fa-dashboard fa-fw"></i> {$m.name}
+                                </li>
+                                <else/>
+                                <li>
+                                    <a href="javascript:;">{$m.name}<span class="fa arrow"></span></a>
+                                    <ul class="node node-second-level">
+                                        <foreach name="m.child" item="c">
+                                            <li>
+                                                <a href="javascript:;">{$c.name}<span class="fa arrow"></span></a>
+                                                <if condition="empty($c.child) eq false">
+                                                    <ul class="node node-third-level">
+                                                        <foreach name="c.child" item="t">
+                                                            <li>{$t.name}</li>
+                                                        </foreach>
+                                                    </ul>
+                                                </if>
+                                            </li>
+                                        </foreach>
+                                    </ul>
+                                </li>
+                            </if>
+                        </foreach>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+    <!-- /.col-lg-8 -->
+</div>
+<!-- /.row -->
+<include file="layout:foot"/>
+</body>
+</html>

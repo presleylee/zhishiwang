@@ -1,0 +1,33 @@
+<div style="margin-top:10px">
+    <notempty name="Think.session.message_success">
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {$Think.session.message_success}
+            <?php session('message_success',null); ?>
+        </div>
+    </notempty>
+
+    <notempty name="Think.session.message_info">
+        <div class="alert alert-info alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {$Think.session.message_info}
+            <?php session('message_info',null);?>
+        </div>
+    </notempty>
+
+    <notempty name="Think.session.message_warning">
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {$Think.session.message_warning}
+            <?php session('message_warning',null);?>
+        </div>
+    </notempty>
+
+    <notempty name="Think.session.message_error">
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {$Think.session.message_error}
+            <?php session('message_error',null);?>
+        </div>
+    </notempty>
+</div>
