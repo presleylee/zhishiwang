@@ -11,7 +11,38 @@ namespace Common\Model;
 
 class AdminRoleModel extends CommonModel
 {
+
     /**
+     * 角色缓存键值
      *
+     * @var string
     */
+    protected $strCacheKey = 'AdminRoleCache';
+
+    /**
+     * 取得所有角色
+     *
+     * @return array
+    */
+    public function getRoleList()
+    {
+        $arr_role = S($this->strCacheKey);
+        if (!$arr_role) {
+            $arr_role = $this->updateCache();
+        }
+        return $arr_role;
+    }
+
+    /**
+     * 更新角色缓存
+     *
+     * @return array
+    */
+    public function updateCache()
+    {
+        $arr_role = $this->select();
+        $arr_role = array_column($arr_role, NULL, 'id');
+        S($this->strCacheKey, $arr_role);
+        return $arr_role;
+    }
 }

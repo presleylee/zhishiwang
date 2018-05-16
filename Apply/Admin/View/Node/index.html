@@ -1,5 +1,12 @@
 <include file="layout:head"/>
 <div class="row">
+    <ul>
+        <li><a href="/Setting/">系统设置</a></li>
+        <li><a href="/Node/index">节点管理</a></li>
+        <li><b>节点管理</b></li>
+    </ul>
+</div>
+<div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">节点管理</h1>
     </div>
@@ -21,19 +28,19 @@
                         <foreach name="node" item="m">
                             <if condition="empty($m.child)">
                                 <li>
-                                    <i class="fa fa-dashboard fa-fw"></i> {$m.name}
+                                    {$m.name} <a href="/Node/edit?id={$m.id}">改</a> <a link="del" href="/Node/delete?id={$m.id}">删</a>
                                 </li>
                                 <else/>
                                 <li>
-                                    <a href="javascript:;">{$m.name}<span class="fa arrow"></span></a>
+                                    {$m.name} <a href="/Node/edit?id={$m.id}">改</a>  <a link="del" href="/Node/delete?id={$m.id}">删</a>
                                     <ul class="node node-second-level">
                                         <foreach name="m.child" item="c">
                                             <li>
-                                                <a href="javascript:;">{$c.name}<span class="fa arrow"></span></a>
+                                                {$c.name} <a href="/Node/edit?id={$c.id}">改</a>  <a link="del" href="/Node/delete?id={$t.id}">删</a>
                                                 <if condition="empty($c.child) eq false">
                                                     <ul class="node node-third-level">
                                                         <foreach name="c.child" item="t">
-                                                            <li>{$t.name}</li>
+                                                            <li>{$t.name} <a href="/Node/edit?id={$t.id}">改</a>  <a link="del" href="/Node/delete?id={$t.id}">删</a></li>
                                                         </foreach>
                                                     </ul>
                                                 </if>

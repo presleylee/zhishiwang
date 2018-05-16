@@ -68,11 +68,15 @@ class AdminNodeModel extends CommonModel
     /**
      * 创建一棵节点目录树
      *
-     * @param array
+     * @param int $int_CurrentNoteID
+     * @return array
      */
-    public function buildNodeTree()
+    public function buildNodeTree($int_CurrentNoteID = 0)
     {
         $arr_nodes = $this->getNodeList();
+        if ($int_CurrentNoteID) {
+            unset($arr_nodes[$int_CurrentNoteID]);
+        }
 
         $arr_tree = [];
         foreach ($arr_nodes as $id => $node) {

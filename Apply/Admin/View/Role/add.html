@@ -1,0 +1,67 @@
+<include file="layout:head"/>
+<style>
+    .form-group {
+        width: 100%;
+        height: auto;
+        display: block;
+        clear: both;
+        margin: 15px 0 15px !important;
+    }
+
+    .form-group label {
+        line-height: 35px;
+        text-align: right;
+    }
+</style>
+<div class="row">
+    <ul>
+        <li><a href="/Setting/">系统设置</a></li>
+        <li><a href="/Role/index">角色管理</a></li>
+        <li><b>添加角色</b></li>
+    </ul>
+</div>
+    <div class="row" style="margin-top:20px;">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    添加角色
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <form role="form" method="post" action="">
+                            <div class="form-group row">
+                                <label class="col-sm-2">角色名称</label>
+                                <div class="col-sm-4"><input class="form-control" type="text" name="name" /></div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2">是否显示</label>
+                                <div class="col-sm-4">
+                                    <label>
+                                        <input type="radio" name="status" id="status1" value="1" checked="" />是
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="status" id="status2" value="0" />否
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2"></div>
+                                <div class="">
+                                    <button type="submit" class="btn btn-success">保 存</button>
+                                    <button type="reset" class="btn btn-default">重 设</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-sm-8 -->
+    </div>
+    <!-- /.row -->
+<include file="layout:foot"/>
+</body>
+</html>

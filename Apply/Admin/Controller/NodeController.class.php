@@ -47,6 +47,40 @@ class NodeController extends CommonController
     }
 
     /**
+     * 修改节点
+     *
+     * @return void;
+     */
+    public function edit()
+    {
+        $id = $this->getData('id');
+        if (!$id) {
+            message('参数不正确', 3);
+        }
+
+        $info = D("Common/AdminNode")->find($id);
+        if (empty($info)) {
+            message('你要修改节点不存', 3);
+        }
+
+        if (IS_POST) {
+            $arr_Data = $this->getPostData(true);
+            $res = D('Common/AdminNode')->where(['id' => $info['id']])->save($arr_Data);
+            if ($res !== false) {
+                D('Common/AdminNode')->updateCache();
+                message('修改成功', 1, '/Node/index');
+            } else {
+                message('修改失败', 3);
+            }
+        }
+
+        $this->assign('info', $info);
+        $arr_nodes = D('Common/AdminNode')->buildNodeTree($info['id']);
+        $this->assign('node', $arr_nodes);
+        $this->display();
+    }
+
+    /**
      * 获取请求数据
      *
      * @param bool $bool_IsEdit
@@ -74,6 +108,7 @@ class NodeController extends CommonController
         $arr_Data['action'] = $arr_Post['action'];
 
         $arr_map = [];
+        $arr_map['name'] = $arr_Data['name'];
         $arr_map['controller'] = $arr_Data['controller'];
         $arr_map['action'] = $arr_Post['action'];
         if ($bool_IsEdit) {
