@@ -45,4 +45,19 @@ class AdminRoleModel extends CommonModel
         S($this->strCacheKey, $arr_role);
         return $arr_role;
     }
+
+    /**
+     * 删除角色
+     *
+     * @param int $int_roleId;
+     * @return void|bool
+    */
+    public function romoveRole($int_roleId)
+    {
+        if (!$int_roleId) {
+            return false;
+        }
+        $this->delete($int_roleId);
+        $this->updateCache();
+    }
 }

@@ -37,12 +37,13 @@
                                 <tbody>
                                 <foreach name="role" item="r">
                                 <tr class="gradeA odd" role="row">
-                                    <td class="sorting_1">{$r.id}</td>
-                                    <td>{$r.role_name}</td>
-                                    <td>{$r.members}</td>
-                                    <td>
-                                        <a href="/Node/edit?id={$r.id}" class="btn btn-success">修改</a>
-                                        <a link="del" data-id="{$r.id}" class="btn btn-error">删除</a>
+                                    <td class="text-center">{$r.id}</td>
+                                    <td>{$r.name}</td>
+                                    <td class="text-center">{$r.members}</td>
+                                    <td class="text-center">
+                                        <a href="/Role/edit?id={$r.id}" class="btn btn-success">修改</a>
+                                        <a href="/Role/priv?id={$r.id}" class="btn btn-default">权限</a>
+                                        <a link="del" data-id="{$r.id}" class="btn btn-danger">删除</a>
                                     </td>
                                 </tr>
                                 </foreach>
