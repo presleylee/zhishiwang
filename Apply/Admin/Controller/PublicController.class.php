@@ -80,7 +80,7 @@ class PublicController extends CommonController
      */
     public function logout()
     {
-
+        session( C('LOGIN_SESSION_KEY'), null);
     }
 
     /**

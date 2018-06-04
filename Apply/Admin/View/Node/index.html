@@ -60,5 +60,10 @@
 </div>
 <!-- /.row -->
 <include file="layout:foot"/>
+<script>
+    $('a[link="del"]').off().on('click', function(){
+        return confirm("确认删除当前节点吗？");
+    })
+</script>
 </body>
 </html>

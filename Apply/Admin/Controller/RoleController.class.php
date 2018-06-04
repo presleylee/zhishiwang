@@ -92,7 +92,7 @@ class RoleController extends CommonController
      * 删聊角色
      *
      * @return void
-    */
+     */
     public function delete()
     {
         $id = $this->getData('id');
@@ -102,6 +102,18 @@ class RoleController extends CommonController
 
         D('Common/AdminRole')->romoveRole($id);
         message('操作成功', 1);
+    }
+
+    /**
+     * 设置角色权限
+     *
+     * @return void
+     */
+    public function priv()
+    {
+        $arr_nodes = D('Common/AdminNode')->buildNodeTree();
+        $this->assign('node', $arr_nodes);
+        $this->display();
     }
 
     /**

@@ -61,5 +61,10 @@
     <!-- /.col-lg-12 -->
 </div>
 <include file="layout:foot"/>
+<script>
+    $('a[link="del"]').off().on('click', function(){
+        return confirm("确认删除当前角色吗？");
+    })
+</script>
 </body>
 </html>
