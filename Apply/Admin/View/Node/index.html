@@ -1,9 +1,10 @@
 <include file="layout:head"/>
 <div class="row">
-    <ul>
-        <li><a href="/Setting/">系统设置</a></li>
+    <ul class="crumb">
+        <li><a href="/Home/">后台首页</a></li>
+        <li><a href="/system/setting">系统设置</a></li>
         <li><a href="/Node/index">节点管理</a></li>
-        <li><b>节点管理</b></li>
+        <li class="last"><a href="/Node/index"><b>节点列表</b></a></li>
     </ul>
 </div>
 <div class="row">
@@ -24,32 +25,40 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
                 <div>
-                    <ul class="node node-first-level">
-                        <foreach name="node" item="m">
-                            <if condition="empty($m.child)">
-                                <li>
-                                    {$m.name} <a href="/Node/edit?id={$m.id}">改</a> <a link="del" href="/Node/delete?id={$m.id}">删</a>
-                                </li>
-                                <else/>
-                                <li>
-                                    {$m.name} <a href="/Node/edit?id={$m.id}">改</a>  <a link="del" href="/Node/delete?id={$m.id}">删</a>
-                                    <ul class="node node-second-level">
-                                        <foreach name="m.child" item="c">
-                                            <li>
-                                                {$c.name} <a href="/Node/edit?id={$c.id}">改</a>  <a link="del" href="/Node/delete?id={$t.id}">删</a>
-                                                <if condition="empty($c.child) eq false">
-                                                    <ul class="node node-third-level">
-                                                        <foreach name="c.child" item="t">
-                                                            <li>{$t.name} <a href="/Node/edit?id={$t.id}">改</a>  <a link="del" href="/Node/delete?id={$t.id}">删</a></li>
-                                                        </foreach>
+                    <ul class="dd-list">
+                        <volist name="node" id="data">
+                            <li class="dd-item">
+                                <button data-action="collapse" type="button" style="display: block;">&nbsp;&nbsp;&nbsp;</button>
+                                <button data-action="expand" type="button" style="display: none;"> &nbsp;&nbsp;&nbsp;</button>
+                                <div class="dd-handle">
+                                    {$data.name} <a href="/Node/edit?id={$data.id}">改</a> <a link="del" href="/Node/delete?id={$data.id}">删</a>
+                                </div>
+                                <if condition="$data['child']">
+                                    <ul class="dd-list">
+                                        <volist name="data['child']" id="item">
+                                            <li class="dd-item">
+                                                <button data-action="collapse" type="button" style="display: none;">&nbsp;&nbsp;&nbsp;</button>
+                                                <button data-action="expand" type="button" style="display: block;">&nbsp;&nbsp;&nbsp;</button>
+                                                <div class="dd-handle">
+                                                    {$item.name} <a href="/Node/edit?id={$item.id}">改</a>  <a link="del" href="/Node/delete?id={$item.id}">删</a>
+                                                </div>
+                                                <if condition="$item['child']">
+                                                    <ul class="dd-list" style="display: none">
+                                                        <volist name="item['child']" id="val">
+                                                            <li class="dd-item">
+                                                                <div class="dd-handle">
+                                                                    {$val.name} <a href="/Node/edit?id={$val.id}">改</a>  <a link="del" href="/Node/delete?id={$val.id}">删</a>
+                                                                </div>
+                                                            </li>
+                                                        </volist>
                                                     </ul>
                                                 </if>
                                             </li>
-                                        </foreach>
+                                        </volist>
                                     </ul>
-                                </li>
-                            </if>
-                        </foreach>
+                                </if>
+                            </li>
+                        </volist>
                     </ul>
                 </div>
             </div>
@@ -64,6 +73,17 @@
     $('a[link="del"]').off().on('click', function(){
         return confirm("确认删除当前节点吗？");
     })
+
+    /*收缩*/
+    $('button[data-action="collapse"]').click(function () {
+        $(this).hide().next('button[data-action="expand"]').show();
+        $(this).siblings('.dd-list').hide();
+    });
+    /*展开*/
+    $('button[data-action="expand"]').click(function () {
+        $(this).hide().prev('button[data-action="collapse"]').show();
+        $(this).siblings('.dd-list').show();
+    });
 </script>
 </body>
 </html>

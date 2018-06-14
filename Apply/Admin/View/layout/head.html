@@ -19,6 +19,7 @@
 
     <!-- Custom CSS -->
     <link href="/public/admin/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="/public/admin/dist/css/custom.css?{:time()}" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
     <link href="/public/admin/vendor/morrisjs/morris.css" rel="stylesheet">
@@ -83,23 +84,21 @@
                         <!-- /input-group -->
                     </li>
                     <foreach name="menu" item="m">
-                        <if condition="empty($m.child)">
-                            <li>
-                                <a href="/{$m.controller}/{$m.action}"><i class="fa fa-dashboard fa-fw"></i> {$m.name}</a>
-                            </li>
-                            <else />
-                            <li>
-                                <a href="javascript:;"><!--i class="fa fa-bar-chart-o fa-fw"></i--> {$m.name}<span class="fa arrow"></span></a>
+                        <li>
+                            <a href="/{$m.controller}/{$m.action}"><!--i class="fa fa-bar-chart-o fa-fw"></i-->
+                                {$m.name}<span class="fa arrow"></span></a>
+                            <if condition="$m.child">
                                 <ul class="nav nav-second-level">
                                     <foreach name="m.child" item="c">
-                                    <li>
-                                        <a href="/{$c.controller}/{$c.action}">{$c.name}</a>
-                                    </li>
+                                        <li>
+                                            <a href="/{$c.controller}/{$c.action}">{$c.name}</a>
+                                        </li>
                                     </foreach>
                                 </ul>
-                                <!-- /.nav-second-level -->
-                            </li>
-                        </if>
+                            </if>
+                            <!-- /.nav-second-level -->
+                        </li>
+
                     </foreach>
                 </ul>
             </div>
@@ -108,4 +107,4 @@
         <!-- /.navbar-static-side -->
     </nav>
     <div id="page-wrapper">
-        <include file="layout:message" />
+        <include file="layout:message"/>

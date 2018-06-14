@@ -18,3 +18,36 @@
 
 <!-- Custom Theme JavaScript -->
 <script src="/public/admin/dist/js/sb-admin-2.js"></script>
+<script type="text/javascript">
+
+    $('.side-menu a').on('click', function(){
+        if ($(this).find('.arrow').length > 0 ) {
+            return false;
+        }
+    })
+
+    // 固定左侧滑动菜单。
+    var breadcrumb = [], minMenu = null;
+    $('.crumb a[href]').each(function () {
+        breadcrumb.unshift(this.href.toLowerCase());
+    });
+
+    console.log(breadcrumb);
+
+    $('#side-menu > li > ul  a[href]').each(function () {
+        if (this.href.toLowerCase() == breadcrumb[0]) {
+            $parent = $(this).parent();
+
+            $(this).addClass('active');
+            $parent.addClass('active');
+        }
+    });
+
+    $('#side-menu > li > a[href]').each(function () {
+        console.log(this.href.toLowerCase());
+        if (this.href.toLowerCase() == breadcrumb[1]) {
+            $parent = $(this).parent();
+            $parent.addClass('active');
+        }
+    });
+</script>

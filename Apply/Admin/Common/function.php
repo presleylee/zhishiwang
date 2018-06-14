@@ -48,3 +48,16 @@ function message($msg = '', $code = null, $url = '')
 
     die();
 }
+
+/**
+ * 生成分页条
+ *
+ * @param integer $int_total
+ * @param integer $int_pagesize
+ * @return string
+*/
+function showAdmin($int_total, $int_pagesize)
+{
+    $res_page = new \Think\Page($int_total, $int_pagesize);
+    return $res_page->show();//  分页显示输出
+}
