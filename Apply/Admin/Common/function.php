@@ -52,12 +52,19 @@ function message($msg = '', $code = null, $url = '')
 /**
  * 生成分页条
  *
- * @param integer $int_total
+ * @param integer $totalRows
  * @param integer $int_pagesize
+ * @param string $parameter
  * @return string
 */
-function showAdmin($int_total, $int_pagesize)
+function showAdmin($totalRows, $limitRow, $parameter)
 {
-    $res_page = new \Think\Page($int_total, $int_pagesize);
-    return $res_page->show();//  分页显示输出
+    $page = new \Common\Extend\Page($totalRows, $limitRow, $parameter);
+    $page->rollPage = 10;
+    $page->lastSuffix = false;
+    $page->setConfig('first', '首页');
+    $page->setConfig('prev', '上一页');
+    $page->setConfig('next', '下一页');
+    $page->setConfig('last', '最后一页');
+    return $page->show();
 }

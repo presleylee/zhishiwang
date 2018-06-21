@@ -20,7 +20,7 @@ class QuestionController extends CommonController
      * 问题列表
      *
      * @return void
-    */
+     */
     public function index()
     {
         $int_page = I('get.p');
@@ -34,6 +34,7 @@ class QuestionController extends CommonController
             $arr_question = D('Common/Question')->where($arr_map)->page($int_page, $int_pagesize)->order('id DESC')->select();
         }
 
+        $str_pagebar = '';
         //$str_pagebar = showAdmin($int_total, $int_pagesize);
 
         $this->assign('pages', $str_pagebar);
@@ -45,14 +46,192 @@ class QuestionController extends CommonController
      * 添加问题
      *
      * @return void
-    */
-    public function add()
+     */
+    public function editor()
     {
-        if (IS_POST) {
+        $id = I('id', 0, 'intval');
 
-        } else {
+        $arr_category = D('Common/Category')->where(['pid' => 0])->select();
+        if ($id) {
+            $question = D('Common/Question')->info($id);
+            if (!$question) {
+                message('您要编辑的问题不存在', 3);
+            }
+            $answer = D('Common/Answer')->where(['qid' => $question['id']])->select();
 
+            $arr_childCate = D('Common/Category')->where(['pid' => $question['category1']])->select();
+
+            $this->assign('answer', $answer);
+            $this->assign('question', $question);
+            $this->assign('childcate', $arr_childCate);
         }
+
+        if (IS_POST) {
+            $data = I('post.');
+            print_r($data);exit;
+        }
+
+
+        $this->assign('category', $arr_category);
+        $this->display();
+    }
+
+    /**
+     * 获取问签二级分类
+     *
+     * @return void
+     */
+    public function getCate()
+    {
+        $pid = I('pid', 0, 'intval');
+        $arr_category = D('Common/Category')->where(['pid' => $pid])->select();
+        $this->ajaxReturn($arr_category);
+    }
+
+    /**
+     * 问签分类管理
+     *
+     * @return void
+     */
+    public function category()
+    {
+        $arr_category = D('Common/Category')->select();
+
+        $this->assign('category', $arr_category);
+        $this->display();
+    }
+
+    /**
+     * 添加分类
+     *
+     * @return void
+     */
+    public function addCate()
+    {
+        $arr_category = D('Common/Category')->where(['pid' => 0])->select();
+
+        $this->assign('category', $arr_category);
+        $this->display();
+    }
+
+    /**
+     * 保存分类添加
+     *
+     * @return void
+     */
+    public function saveCate()
+    {
+        $data = I('post.');
+        $arr_cateData = $this->_getCatePostData($data);
+        $res = D('Common/Category')->add($arr_cateData);
+        if ($res) {
+            message('分类添加成功', 1);
+        } else {
+            message('分类添加失改', 3);
+        }
+    }
+
+    public function editCate()
+    {
+        $id = (int)I('get.id');
+        $arr_curCate = D('Common/Category')->info($id);
+        if (!$arr_curCate) {
+            message('非法操作', 3);
+        }
+        $arr_category = D('Common/Category')->where(['pid' => 0])->select();
+
+        $this->assign('info', $arr_curCate);
+        $this->assign('category', $arr_category);
+        $this->display();
+    }
+
+    public function updateCate()
+    {
+        $data = I('post.');
+        $id = (int)$data['id'];
+        if (!$id) {
+            message('非法操作', 3);
+        }
+        $arr_cateData = $this->_getCatePostData($data, true);
+        $res = D('Common/Category')->update($arr_cateData, $id);
+        if ($res !== false) {
+            message('分类修改成功', 1);
+        } else {
+            message('分类修改失改', 3);
+        }
+    }
+
+    /**
+     * 删除分类
+     *
+     * @return void
+     */
+    public function deleteCate()
+    {
+        $id = (int)I('get.id');
+        $arr_curCate = D('Common/Category')->info($id);
+        if (!$arr_curCate) {
+            message('非法操作', 3);
+        }
+        $arr_map = [];
+        if (!$arr_curCate['pid']) {
+
+            if (D('Common/Category')->where(['pid' => $arr_curCate['id']])->count() > 0) {
+                message('当前分类下含有子类，无法直接将其删除', 3);
+            }
+            $arr_map['category1'] = $arr_curCate['id'];
+        } else {
+            $arr_map['category1'] = $arr_curCate['pid'];
+            $arr_map['category2'] = $arr_curCate['id'];
+        }
+        if (D('Common/Question')->where($arr_map)->count() > 0) {
+            message('当前分类包含有问题，不能直接将其删除', 3);
+        }
+        D('Common/Category')->delete($arr_curCate['id']);
+        message('操作成功', 1);
+    }
+
+    /**
+     * 获得分类post请求数据
+     *
+     * @param array $data
+     * @param bool $bool_isEdit
+     * @return array
+     */
+    private function _getCatePostData($data, $bool_isEdit = false)
+    {
+        $arr_date = [];
+
+        $arr_data['pid'] = (int)$data['pid'];
+        if (!trim($data['name'])) {
+            message('必须填写分类名称', 3);
+        }
+        $arr_data['name'] = trim($data['name']);
+
+        //验证分类唯一性
+        $arr_map = [];
+        $arr_map['name'] = $arr_data['name'];
+        $arr_map['pid'] = $arr_data['pid'];
+        if ($bool_isEdit) {
+            $int_cateId = (int)$data['id'];
+            if (!$int_cateId) {
+                message('没有获取得分类id', 3);
+            }
+            $arr_map['id'] = ['neq', $int_cateId];
+        }
+        $int_nums = D('Common/Category')->where($arr_map)->count();
+        if ($int_nums) {
+            message('您已经添加过同名分类了', 3);
+        }
+
+        $arr_data['describe'] = trim($data['describe']);
+        if (is_numeric($data['sort']) == false) {
+            message('分类排序数据不正确', 3);
+        }
+        $arr_data['sort'] = (int)$data['sort'];
+        $arr_data['status'] = (int)(in_array($data['status'], [0, 1]) ? $data['status'] : 1);
+
+        return $arr_data;
     }
 
     /**
@@ -68,7 +247,6 @@ class QuestionController extends CommonController
         $arr_Data = [];
         $arr_Data['category1'] = (int)$arr_Post['category1'];
         $arr_Data['category2'] = (int)$arr_Post['category2'];
-        $arr_Data['category3'] = (int)$arr_Post['category3'];
         if (!$arr_Post['question']) {
             message('必须问题内容', 3);
         }

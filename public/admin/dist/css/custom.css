@@ -217,4 +217,20 @@ font.not_choose_all {
 }
 
 *,*:after,*:before{box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;}
-input,select,textarea{outline: none;-webkit-appearance: none;}
+.dd-item input,.dd-item select,.dd-item textarea{outline: none;-webkit-appearance: none;}
+
+.form-group {
+    width: 100%;
+    height: auto;
+    display: block;
+    clear: both;
+    margin: 15px 0 15px !important;
+}
+
+.form-group label {
+    line-height: 35px;
+    text-align: right;
+}
+
+.answer { padding:0; margin:0; list-style: none; }
+.page-header .btn { float:right !important; }

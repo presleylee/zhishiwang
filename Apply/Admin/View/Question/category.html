@@ -1,0 +1,64 @@
+<include file="layout:head"/>
+<div class="row">
+    <ul class="crumb">
+        <li><a href="/Home/">后台首页</a></li>
+        <li><a href="/question/index">问题管理</a></li>
+        <li class="last"><a href="/question/category"><b>问题分类</b></a></li>
+    </ul>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">问题分类<a href="/Question/addCate" class="btn btn-success">添加分类</a></h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<br />
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                分类管理
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div>
+                    <ul class="dd-list">
+                        <volist name="category" id="data">
+                            <li class="dd-item">
+                                <if condition="$data['child']">
+                                <button data-action="collapse" type="button" style="display: block;">&nbsp;&nbsp;&nbsp;</button>
+                                <button data-action="expand" type="button" style="display: none;"> &nbsp;&nbsp;&nbsp;</button>
+                                </if>
+                                <div class="dd-handle">
+                                    {$data.name} <a href="/Question/editCate?id={$data.id}">改</a> <a link="del" href="/Question/deleteCate?id={$data.id}">删</a>
+                                </div>
+                                <if condition="$data['child']">
+                                    <ul class="dd-list">
+                                        <volist name="data['child']" id="item">
+                                            <li class="dd-item">
+                                                <div class="dd-handle">
+                                                    {$item.name} <a href="/Question/editCate?id={$item.id}">改</a>  <a link="del" href="/Question/deleteCate?id={$item.id}">删</a>
+                                                </div>
+                                            </li>
+                                        </volist>
+                                    </ul>
+                                </if>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+    <!-- /.col-lg-8 -->
+</div>
+<include file="layout:foot"/>
+<script>
+    $('a[link="del"]').off().on('click', function(){
+        return confirm("确认删除当前分类吗？");
+    })
+</script>
+</body>
+</html>

@@ -8,13 +8,12 @@
 </div>
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">问题列表</h1>
+        <h1 class="page-header">问题列表<a href="/Question/editor" class="btn btn-success" style="float:right;">添加问题</a></h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
-<a href="/Question/add" class="btn btn-success">添加问题</a><br />
 <!-- /.row -->
-<div class="row" style="margin-top:20px;">
+<div class="row">
 
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -29,8 +28,10 @@
                                 <thead>
                                 <tr role="row">
                                     <th  rowspan="1" colspan="1">id </th>
-                                    <th  rowspan="1" colspan="1">角色名称 </th>
-                                    <th  rowspan="1" colspan="1">成员数 </th>
+                                    <th  rowspan="1" colspan="1">问题</th>
+                                    <th  rowspan="1" colspan="1">所属分类</th>
+                                    <th  rowspan="1" colspan="1">答题次数</th>
+                                    <th  rowspan="1" colspan="1">正确率 </th>
                                     <th  rowspan="1" colspan="1">操作 </th>
                                 </tr>
                                 </thead>
@@ -41,8 +42,7 @@
                                     <td>{$r.name}</td>
                                     <td class="text-center">{$r.members}</td>
                                     <td class="text-center">
-                                        <a href="/Role/edit?id={$r.id}" class="btn btn-success">修改</a>
-                                        <a href="/Role/priv?id={$r.id}" class="btn btn-default">权限</a>
+                                        <a href="/Question/editor?id={$r.id}" class="btn btn-success">修改</a>
                                         <a link="del" data-id="{$r.id}" class="btn btn-danger">删除</a>
                                     </td>
                                 </tr>
